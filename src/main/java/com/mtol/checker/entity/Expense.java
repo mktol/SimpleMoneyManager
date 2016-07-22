@@ -2,25 +2,52 @@ package com.mtol.checker.entity;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class Expense {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
     private BigDecimal cost;
     private String description;
     @ManyToOne
     private User user;
 
+    @ManyToMany
+    @JoinTable(
+            name = "EXP_CAT",
+            joinColumns = @JoinColumn(name = "EXP_ID", referencedColumnName = "ID"),
+            inverseJoinColumns = @JoinColumn(name = "CAT_ID", referencedColumnName = "CAT_ID" )
+    )
+    private List<Category> categories;
+
     public Expense() {
+        categories = new ArrayList<>();
     }
 
     public Expense(BigDecimal cost, String description, User user) {
         this.cost = cost;
         this.description = description;
         this.user = user;
+    }
+
+    public void addCategory(Category category){
+        if(!categories.contains(category)){
+            categories.add(category);
+        }
+        if(category.getExpenses().contains(this)){
+            category.getExpenses().add(this);
+        }
+    }
+    // Getters and setters
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
     }
 
     public Long getId() {

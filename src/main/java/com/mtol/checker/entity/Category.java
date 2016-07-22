@@ -8,8 +8,32 @@ import java.util.List;
 public class Category {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
+    @Column(name = "CAT_ID")
     Long id;
     private String name;
+    @ManyToMany(mappedBy = "categories", fetch = FetchType.LAZY)
+    private List<Expense> expenses;
+
+    public Category() {
+        expenses = new ArrayList<>();
+    }
+
+    public void addExpnse(Expense expense){
+        if(!expenses.contains(expense)){
+            expenses.add(expense);
+        }
+        if(!expense.getCategories().contains(this)){
+            expense.getCategories().add(this);
+        }
+    }
+
+    public List<Expense> getExpenses() {
+        return expenses;
+    }
+
+    public void setExpenses(List<Expense> expenses) {
+        this.expenses = expenses;
+    }
 
     public long getId() {
         return id;
