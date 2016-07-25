@@ -1,5 +1,6 @@
 package com.mtol.checker.controller;
 
+import com.mtol.checker.entity.Expense;
 import com.mtol.checker.entity.ExpenseDTO;
 import com.mtol.checker.service.validator.ExpenseDtoValidator;
 import com.mtol.checker.service.ExpenseService;
@@ -37,13 +38,13 @@ public class ExpenseController {
     }
 
     @RequestMapping(value = "/expense", method = RequestMethod.POST , consumes = "application/json")
-    public ModelAndView handleExpense(@RequestBody ExpenseDTO expense) {
+    @ResponseBody
+    public Expense handleExpense(@RequestBody ExpenseDTO expense) {
         log.info("expense == "+expense.toString());
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("expense_state");
-        Long id = expenseService.saveExpense(expense);
-        modelAndView.addObject("exp_id", id);
-        return modelAndView;
+
+        Expense resExpense = expenseService.saveExpense(expense);
+
+        return resExpense;
 
     }
 

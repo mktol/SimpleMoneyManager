@@ -2,18 +2,18 @@ package com.mtol.checker.service;
 
 import com.mtol.checker.entity.Category;
 import com.mtol.checker.repository.CategoryRepository;
+import com.mtol.checker.repository.CategoryService;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-/**
- * Created by mtol on 22.07.2016.
- */
-public class CategoryServeiceImpl implements CategoryService {
+@Service
+public class CategoryServeiceImpl implements com.mtol.checker.service.CategoryService {
 
-    private CategoryRepository categoryRepository;
+    private CategoryRepository categoryService;
 
-    public CategoryServeiceImpl(CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
+    public CategoryServeiceImpl(CategoryRepository categoryService) {
+        this.categoryService = categoryService;
     }
 
     /**
@@ -23,11 +23,11 @@ public class CategoryServeiceImpl implements CategoryService {
      */
     @Override
     public Category validateCategory(String name) {
-        Optional<Category> category = categoryRepository.findOneByName(name);
+        Optional<Category> category = categoryService.findOneByName(name);
         if(category.isPresent()){
             return category.get();
         }else {
-            return categoryRepository.save(new Category(name));
+            return categoryService.save(new Category(name));
         }
     }
 

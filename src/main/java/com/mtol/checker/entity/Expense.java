@@ -3,6 +3,7 @@ package com.mtol.checker.entity;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -12,6 +13,7 @@ public class Expense {
     private Long id;
     private BigDecimal cost;
     private String description;
+    private Date creatinTime;
     @ManyToOne
     private User user;
 
@@ -80,6 +82,14 @@ public class Expense {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Date getCreatinTime() {
+        return creatinTime;
+    }
+
+    public void setCreatinTime(Date creatinTime) {
+        this.creatinTime = creatinTime;
     }
 
     @Override

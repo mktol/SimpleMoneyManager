@@ -53,13 +53,28 @@
             <input type="submit" class="btn btn-default" value="submit">
         </form>
 
-        <form id="target" action="destination.html">
-            <input type="text" value="Hello there">
-            <input type="submit" value="Go">
-        </form>
-        <div id="other">
-            Trigger the handler
-        </div>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>id</th>
+                <th>description</th>
+                <th>cost</th>
+                <th>category</th>
+                <th>creation date</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="success">
+                <td id="id"></td>
+                <td id="desc"></td>
+                <td id="cat"></td>
+                <td id="date"></td>
+
+            </tr>
+
+            </tbody>
+        </table>
         <script>
             $( document ).ready(function() {
                 // Handler for .ready() called.
@@ -107,6 +122,10 @@
             $( "#other" ).click(function() {
                 $( "#target" ).submit();
             });
+
+            var putExpenseInTable = new function(){
+
+            }
         </script>
     </div>
 </body>
