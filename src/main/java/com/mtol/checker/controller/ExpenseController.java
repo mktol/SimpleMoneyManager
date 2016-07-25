@@ -1,26 +1,33 @@
 package com.mtol.checker.controller;
 
-import com.mtol.checker.entity.Expense;
+import com.mtol.checker.entity.ExpenseDTO;
+import com.mtol.checker.service.validator.ExpenseDtoValidator;
 import com.mtol.checker.service.ExpenseService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.View;
+
+import javax.validation.Valid;
 
 @Controller()
 @RequestMapping(value = "/personal")
 public class ExpenseController {
+    private static final Logger log = LoggerFactory.getLogger(ExpenseController.class);
 
     private ExpenseService expenseService;
+//    private ExpenseDtoValidator expenseDtoValidator;
 
     @Autowired
-    public ExpenseController(ExpenseService expenseService) {
+    public ExpenseController(ExpenseService expenseService, ExpenseDtoValidator expenseDtoValidator) {
         this.expenseService = expenseService;
+//        this.expenseDtoValidator = expenseDtoValidator;
     }
+
+
 
     @RequestMapping(value = "/expense", method = RequestMethod.GET)
     public ModelAndView handleExpense(){
@@ -29,8 +36,9 @@ public class ExpenseController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/expense", method = RequestMethod.POST)
-    public ModelAndView handleExpense(@RequestParam Expense expense) {
+    @RequestMapping(value = "/expense", method = RequestMethod.POST , consumes = "application/json")
+    public ModelAndView handleExpense(@RequestBody ExpenseDTO expense) {
+        log.info("expense == "+expense.toString());
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("expense_state");
         Long id = expenseService.saveExpense(expense);

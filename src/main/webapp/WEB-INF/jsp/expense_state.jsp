@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,10 +15,15 @@
     <title>Spring Security</title>
 
     <!-- Bootstrap core CSS -->
+
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <%--<link href="<c:url value="/pages/css/jumbotron-narrow.css" />" rel="stylesheet">--%>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+    <script src="/js/expense_state.js"></script>
+    <script src="/js/jquery-3.1.0.js"></script>
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -28,7 +34,8 @@
 
 <body>
     <div class="container">
-        <form action="/personal/expense" method="post">
+
+        <form action="/personal/expense" method="post" id="expenseForm">
             <fieldset class="form-group">
                 <label for="cost">Цена</label>
                 <input type="text" class="form-control" id="cost" placeholder="Цена">
@@ -39,16 +46,68 @@
             </fieldset>
 
             <fieldset class="form-group">
-                <label for="category">Товар</label>
+                <label for="category">категория</label>
                 <input type="text" class="form-control" id="category" placeholder="категория">
             </fieldset>
 
-            <fieldset class="form-group">
-                <label for="expense">Товар</label>
-                <input type="text" class="form-control" id="expense" placeholder="Товар">
-            </fieldset>
-            <button type="submit" class="btn btn-default">Submit</button>
+            <input type="submit" class="btn btn-default" value="submit">
         </form>
+
+        <form id="target" action="destination.html">
+            <input type="text" value="Hello there">
+            <input type="submit" value="Go">
+        </form>
+        <div id="other">
+            Trigger the handler
+        </div>
+        <script>
+            $( document ).ready(function() {
+                // Handler for .ready() called.
+                console.log("Im loaded!!! ");
+                console.log("res/stat/js!!! ");
+            });
+            $(function() {
+                $("#expense_form").submit("click", function (event) {
+                    event.preventDefault();
+                    var cost = $("#cost").val();
+                    console.log(cost);
+                });
+            });
+            $("#expenseForm").submit( function (event) {
+                event.preventDefault();
+                var cost = $("#cost").val();
+                var description = $("#description").val();
+                var category = $("#category").val();
+                ;
+                $.ajax(
+                        {
+                            type: "POST",
+                            url: "/personal/expense",
+
+                            data: JSON.stringify({cost, description, category}),
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function (data) {
+                                alert(data);
+                            },
+                            failure: function (errMsg) {
+                                alert(errMsg);
+                            }
+                        }
+                );
+            });
+
+            $( "#target" ).submit(function( event ) {
+                alert( "Handler for .submit() called." );
+                event.preventDefault();
+            });
+
+
+
+            $( "#other" ).click(function() {
+                $( "#target" ).submit();
+            });
+        </script>
     </div>
 </body>
 </html>

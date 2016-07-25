@@ -1,12 +1,13 @@
 package com.mtol.checker.controller;
 
+import com.mtol.checker.Application;
 import com.mtol.checker.entity.UserCreateForm;
-import com.mtol.checker.service.UserCreateFormValidator;
+import com.mtol.checker.service.validator.UserCreateFormValidator;
 import com.mtol.checker.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.data.annotation.AccessType;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -20,6 +21,7 @@ import java.util.NoSuchElementException;
 @Controller
 public class UserController {
 
+    private static final Logger log = LoggerFactory.getLogger(UserController.class);
     private final UserService userService;
     private final UserCreateFormValidator userCreateFormValidator;
 

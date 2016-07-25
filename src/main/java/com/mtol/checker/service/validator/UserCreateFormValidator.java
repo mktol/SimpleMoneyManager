@@ -1,6 +1,7 @@
-package com.mtol.checker.service;
+package com.mtol.checker.service.validator;
 
 import com.mtol.checker.entity.UserCreateForm;
+import com.mtol.checker.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;

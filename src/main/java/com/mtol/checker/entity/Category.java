@@ -18,6 +18,11 @@ public class Category {
         expenses = new ArrayList<>();
     }
 
+    public Category(String name){
+        this.name = name;
+        expenses = new ArrayList<>();
+    }
+
     public void addExpnse(Expense expense){
         if(!expenses.contains(expense)){
             expenses.add(expense);
