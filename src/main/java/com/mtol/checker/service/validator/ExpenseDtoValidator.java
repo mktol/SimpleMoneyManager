@@ -13,12 +13,12 @@ public class ExpenseDtoValidator /*implements Validator*/ {
     private ExpenseService expenseService;
     private CategoryService categoryService;
 
-//    @Override
+
     public boolean supports(Class<?> clazz) {
         return clazz.equals(ExpenseDTO.class);
     }
 
-//    @Override
+
     public void validate(Object target, Errors errors) {
         ExpenseDTO expenseDTO = (ExpenseDTO)target;
         validateCost(expenseDTO, errors);
