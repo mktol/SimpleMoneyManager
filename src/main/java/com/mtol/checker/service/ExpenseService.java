@@ -1,7 +1,7 @@
 package com.mtol.checker.service;
 
 import com.mtol.checker.entity.Expense;
-import com.mtol.checker.entity.ExpenseDTO;
+import com.mtol.checker.entity.dto.ExpenseDTO;
 
 /**
  * Created by mtol on 22.07.2016.

@@ -17,6 +17,7 @@
     <!-- Bootstrap core CSS -->
 
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <%--<link href="<c:url value="/pages/css/jumbotron-narrow.css" />" rel="stylesheet">--%>
@@ -30,109 +31,120 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
+    <script src="https://code.jquery.com/jquery-1.12.3.js"></script>
+    <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+
 </head>
 
 <body>
-    <div class="container">
+<div class="container">
 
-        <form action="/personal/expense" method="post" id="expenseForm">
-            <fieldset class="form-group">
-                <label for="cost">Цена</label>
-                <input type="text" class="form-control" id="cost" placeholder="Цена">
-            </fieldset>
-            <fieldset class="form-group">
-                <label for="description">Товар</label>
-                <input type="text" class="form-control" id="description" placeholder="Описание">
-            </fieldset>
+    <form action="/personal/expense" method="post" id="expenseForm">
+        <fieldset class="form-group">
+            <label for="cost">Цена</label>
+            <input type="text" class="form-control" id="cost" placeholder="Цена">
+        </fieldset>
+        <fieldset class="form-group">
+            <label for="description">Товар</label>
+            <input type="text" class="form-control" id="description" placeholder="Описание">
+        </fieldset>
 
-            <fieldset class="form-group">
-                <label for="category">категория</label>
-                <input type="text" class="form-control" id="category" placeholder="категория">
-            </fieldset>
+        <fieldset class="form-group">
+            <label for="category">категория</label>
+            <input type="text" class="form-control" id="category" placeholder="категория">
+        </fieldset>
 
-            <input type="submit" class="btn btn-default" value="submit">
-        </form>
+        <input type="submit" class="btn btn-default" value="submit">
+    </form>
 
+    <input type="button" id="updateTb" class="btn btn-success" value="update table">
 
-        <table class="table">
-            <thead>
-            <tr>
+    <table class="display" id="expenseTable">
+        <thead>
+        <tr>
 
-                <th>description</th>
-                <th>cost</th>
-                <th>category</th>
-                <th>creation date</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr class="success">
-                <td id="desc"></td>
-                <td id="cost_id"></td>
-                <td id="category_val"></td>
-                <td id="date"></td>
+            <th>description</th>
+            <th>cost</th>
+            <th>category</th>
+            <th>creationDate</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="success">
+            <td id="desc"></td>
+            <td id="cost_id"></td>
+            <td id="category_val"></td>
+            <td id="date"></td>
 
-            </tr>
+        </tr>
+        <tr>
+            <td>desc blaba</td>
+            <td> fal</td>
+            <td>gak</td>
+            <td>mak</td>
 
-            </tbody>
-        </table>
-        <script>
-            $( document ).ready(function() {
-                // Handler for .ready() called.
-                console.log("Im loaded!!! ");
-                console.log("res/stat/js!!! ");
-            });
-            $(function() {
-                $("#expense_form").submit("click", function (event) {
-                    event.preventDefault();
-                    var cost = $("#cost").val();
-                    console.log(cost);
-                });
-            });
-            $("#expenseForm").submit( function (event) {
+        </tr>
+
+        </tbody>
+    </table>
+    <script>
+        $(document).ready(function () {
+            // Handler for .ready() called.
+            console.log("Im loaded!!! ");
+            console.log("res/stat/js!!! ");
+        });
+        $(function () {
+            $("#expense_form").submit("click", function (event) {
                 event.preventDefault();
                 var cost = $("#cost").val();
-                var description = $("#description").val();
-                var category = $("#category").val();
+                console.log(cost);
+            });
+        });
 
-                $.ajax(
-                        {
-                            type: "POST",
-                            url: "/personal/expense",
+        $("#expenseForm").submit(function (event) {
+            event.preventDefault();
+            var cost = $("#cost").val();
+            var description = $("#description").val();
+            var category = $("#category").val();
 
-                            data: JSON.stringify({cost, description, category}),
-                            contentType: "application/json; charset=utf-8",
-                            dataType: "json",
-                            success: function (data) {
+            $.ajax(
+                    {
+                        type: "POST",
+                        url: "/personal/expense",
 
-                                $("#cost_id").text(data.cost);
-                                $("#desc").text(data.description);
-                                $("#date").text(data.creationDate);
-                                $("#category_val").text(data.category);
+                        data: JSON.stringify({cost, description, category}),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (data) {
 
-                                console.log(data);
-                            },
-                            failure: function (errMsg) {
-                                alert(errMsg);
-                            }
+                            $("#cost_id").text(data.cost);
+                            $("#desc").text(data.description);
+                            $("#date").text(data.creationDate);
+                            $("#category_val").text(data.category);
+
+                            console.log(data);
+                        },
+                        failure: function (errMsg) {
+                            alert(errMsg);
                         }
-                );
-            });
+                    }
+            );
+        });
 
-            $( "#target" ).submit(function( event ) {
-                alert( "Handler for .submit() called." );
-                event.preventDefault();
-            });
+        $("#target").submit(function (event) {
+            alert("Handler for .submit() called.");
+            event.preventDefault();
+        });
 
 
+        $("#other").click(function () {
+            $("#target").submit();
+        });
 
-            $( "#other" ).click(function() {
-                $( "#target" ).submit();
-            });
+        var putExpenseInTable = new function () {
 
-            var putExpenseInTable = new function(){
-
-            }
-        </script>
-    </div>
+        }
+    </script>
+</div>
 </body>
 </html>
