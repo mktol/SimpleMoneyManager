@@ -57,7 +57,7 @@
         <table class="table">
             <thead>
             <tr>
-                <th>id</th>
+
                 <th>description</th>
                 <th>cost</th>
                 <th>category</th>
@@ -66,9 +66,9 @@
             </thead>
             <tbody>
             <tr class="success">
-                <td id="id"></td>
                 <td id="desc"></td>
-                <td id="cat"></td>
+                <td id="cost_id"></td>
+                <td id="category_val"></td>
                 <td id="date"></td>
 
             </tr>
@@ -93,7 +93,7 @@
                 var cost = $("#cost").val();
                 var description = $("#description").val();
                 var category = $("#category").val();
-                ;
+
                 $.ajax(
                         {
                             type: "POST",
@@ -103,7 +103,13 @@
                             contentType: "application/json; charset=utf-8",
                             dataType: "json",
                             success: function (data) {
-                                alert(data);
+
+                                $("#cost_id").text(data.cost);
+                                $("#desc").text(data.description);
+                                $("#date").text(data.creationDate);
+                                $("#category_val").text(data.category);
+
+                                console.log(data);
                             },
                             failure: function (errMsg) {
                                 alert(errMsg);
