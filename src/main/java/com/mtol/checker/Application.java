@@ -9,6 +9,7 @@ import com.mtol.checker.entity.Category;
 import com.mtol.checker.entity.Expense;
 import com.mtol.checker.entity.User;
 import com.mtol.checker.entity.UserRole;
+import com.mtol.checker.repository.CategoryRepository;
 import com.mtol.checker.repository.ExpenseRepository;
 import com.mtol.checker.repository.UserRepository;
 import org.slf4j.Logger;
@@ -41,7 +42,7 @@ public class Application {
     }
 
     @Bean
-    public CommandLineRunner demo(UserRepository repository, ExpenseRepository expenseRepository) {
+    public CommandLineRunner demo(UserRepository repository, ExpenseRepository expenseRepository, CategoryRepository categoryRepository) {
         return (args) -> {
             // save a couple of customers
             String password = new BCryptPasswordEncoder().encode("1111");
@@ -94,6 +95,9 @@ public class Application {
                 log.info(bauer.toString());
             }
             log.info("");
+            Category category = categoryRepository.save(new Category("cinema"));
+            log.info(category.toString());
+
         };
     }
 

@@ -2,7 +2,7 @@ package com.mtol.checker.service;
 
 import com.mtol.checker.entity.Category;
 import com.mtol.checker.repository.CategoryRepository;
-import com.mtol.checker.repository.CategoryService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -10,10 +10,11 @@ import java.util.Optional;
 @Service
 public class CategoryServeiceImpl implements com.mtol.checker.service.CategoryService {
 
-    private CategoryRepository categoryService;
+    private CategoryRepository categoryRepository;
 
-    public CategoryServeiceImpl(CategoryRepository categoryService) {
-        this.categoryService = categoryService;
+    @Autowired
+    public CategoryServeiceImpl(CategoryRepository categoryRepository) {
+        this.categoryRepository = categoryRepository;
     }
 
     /**
@@ -23,11 +24,13 @@ public class CategoryServeiceImpl implements com.mtol.checker.service.CategorySe
      */
     @Override
     public Category validateCategory(String name) {
-        Optional<Category> category = categoryService.findOneByName(name);
+        Optional<Category> category = categoryRepository.findOneByName(name);
         if(category.isPresent()){
             return category.get();
         }else {
-            return categoryService.save(new Category(name));
+            Category category1 = new Category(name);
+            Category resultCategory = categoryRepository.save(category1);
+            return resultCategory;
         }
     }
 

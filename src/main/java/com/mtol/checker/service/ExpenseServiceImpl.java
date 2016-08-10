@@ -39,6 +39,16 @@ public class ExpenseServiceImpl implements ExpenseService {
         return null;
     }
 
+    @Override
+    public Double sumAllExpenses() {
+        return null;
+    }
+
+    @Override
+    public Double sumExpenseByParam(Category category) {
+        return null;
+    }
+
 
     private Expense convertDtoToExpense(ExpenseDTO dto){
         Expense expense = new Expense();

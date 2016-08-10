@@ -98,7 +98,6 @@
                         {
                             type: "POST",
                             url: "/personal/expense",
-
                             data: JSON.stringify({cost, description, category}),
                             contentType: "application/json; charset=utf-8",
                             dataType: "json",
@@ -123,7 +122,7 @@
                 $( "#target" ).submit();
             });
 
-            var putExpenseInTable = new function(){
+            var putExpenseInTable =  function(data){
 
             }
         </script>
