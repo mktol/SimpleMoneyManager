@@ -13,7 +13,7 @@ public class Expense {
     private Long id;
     private BigDecimal cost;
     private String description;
-    private Date creatinTime;
+    private Date creationTime;
     @ManyToOne
     private User user;
 
@@ -39,7 +39,7 @@ public class Expense {
         if(!categories.contains(category)){
             categories.add(category);
         }
-        if(category.getExpenses().contains(this)){
+        if(!category.getExpenses().contains(this)){
             category.getExpenses().add(this);
         }
     }
@@ -84,12 +84,12 @@ public class Expense {
         this.description = description;
     }
 
-    public Date getCreatinTime() {
-        return creatinTime;
+    public Date getCreationTime() {
+        return creationTime;
     }
 
-    public void setCreatinTime(Date creatinTime) {
-        this.creatinTime = creatinTime;
+    public void setCreationTime(Date creationTime) {
+        this.creationTime = creationTime;
     }
 
     @Override
@@ -98,6 +98,9 @@ public class Expense {
                 "id=" + id +
                 ", cost=" + cost +
                 ", description='" + description + '\'' +
+                ", creationTime=" + creationTime +
+                ", user=" + user +
+                ", categories=" + categories +
                 '}';
     }
 }

@@ -2,7 +2,7 @@ package com.mtol.checker.service;
 
 import com.mtol.checker.entity.Category;
 import com.mtol.checker.entity.Expense;
-import com.mtol.checker.entity.ExpenseDTO;
+import com.mtol.checker.entity.dto.ExpenseDTO;
 import com.mtol.checker.repository.ExpenseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -56,7 +56,7 @@ public class ExpenseServiceImpl implements ExpenseService {
         expense.setDescription(dto.getDescription());
         Category category = categoryService.validateCategory(dto.getCategory());
         expense.addCategory(category);
-        expense.setCreatinTime(new Date());
+        expense.setCreationTime(new Date());
         return expense;
 
     }

@@ -1,8 +1,9 @@
-package com.mtol.checker.entity;
+package com.mtol.checker.entity.dto;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * Created by mtol on 22.07.2016.
@@ -12,6 +13,7 @@ public class ExpenseDTO {
     private Double cost;
     private String description;
     private String category;
+    private String creationDate;
 
     public Double getCost() {
         return cost;
@@ -37,12 +39,21 @@ public class ExpenseDTO {
         this.category = category;
     }
 
+    public String getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(String creationDate) {
+        this.creationDate = creationDate;
+    }
+
     @Override
     public String toString() {
         return "ExpenseDTO{" +
                 "cost=" + cost +
                 ", description='" + description + '\'' +
                 ", category='" + category + '\'' +
+                ", creationDate=" + creationDate +
                 '}';
     }
 }
