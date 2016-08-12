@@ -34,11 +34,11 @@ public class Application {
 
         System.out.println("Let's inspect the beans provided by Spring Boot:");
 
-//        String[] beanNames = ctx.getBeanDefinitionNames();
-//        Arrays.sort(beanNames);
-//        for (String beanName : beanNames) {
-//            System.out.println(beanName);
-//        }
+        String[] beanNames = ctx.getBeanDefinitionNames();
+        Arrays.sort(beanNames);
+        for (String beanName : beanNames) {
+            System.out.println(beanName);
+        }
     }
 
     @Bean
@@ -61,11 +61,9 @@ public class Application {
             repository.save(new User("Michelle", "Dessler"));
             User andriy = new User("Andry", "asdfasdf@mail.py");
             List<Expense> expenses = new ArrayList<>();
-            BigDecimal bigDecimal = new BigDecimal(23);
-            expenses.add(new Expense(bigDecimal, "food" , andriy) );
-            expenses.add(new Expense(bigDecimal, "coffee" , andriy) );
+            expenses.add(new Expense(23., "food" , andriy) );
+            expenses.add(new Expense(23., "coffee" , andriy) );
 
-//            expenseRepository.save(expenses);
             andriy.setExpenses(expenses);
             // ger andy
             andriy = repository.save(andriy);
@@ -96,7 +94,11 @@ public class Application {
             }
             log.info("");
             Category category = categoryRepository.save(new Category("cinema"));
+            Expense expense = new Expense(34. , "food", user);
+            expense.addCategory(category);
+            expenseRepository.save(expense);
             log.info(category.toString());
+            log.info(expense.toString());
 
         };
     }

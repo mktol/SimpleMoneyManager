@@ -63,7 +63,8 @@ public class Category {
         return "Category{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", expenses=" + expenses +
+                ", expenses=" + expenses.size() +
                 '}';
     }
+
 }

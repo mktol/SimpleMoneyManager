@@ -11,7 +11,7 @@ public class Expense {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
-    private BigDecimal cost;
+    private Double cost;
     private String description;
     private Date creationTime;
     @ManyToOne
@@ -29,10 +29,11 @@ public class Expense {
         categories = new ArrayList<>();
     }
 
-    public Expense(BigDecimal cost, String description, User user) {
+    public Expense(Double cost, String description, User user) {
         this.cost = cost;
         this.description = description;
         this.user = user;
+        categories = new ArrayList<>();
     }
 
     public void addCategory(Category category){
@@ -68,11 +69,11 @@ public class Expense {
         this.user = user;
     }
 
-    public BigDecimal getCost() {
+    public Double getCost() {
         return cost;
     }
 
-    public void setCost(BigDecimal cost) {
+    public void setCost(Double cost) {
         this.cost = cost;
     }
 
