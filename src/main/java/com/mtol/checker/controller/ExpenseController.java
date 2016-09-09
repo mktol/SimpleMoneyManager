@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller()
 @RequestMapping(value = "/personal")
@@ -34,7 +36,7 @@ public class ExpenseController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/expense", method = RequestMethod.POST, consumes = "application/json")
+    @RequestMapping(value = "/expense", method = RequestMethod.POST)
     @ResponseBody
     public ExpenseDTO handleExpense(@RequestBody ExpenseDTO expense) {
         log.info("expense == " + expense.toString());
@@ -56,6 +58,18 @@ public class ExpenseController {
             expense.setDescription("Description = " + i);
             expenseDTOs[i] = expense;
         }
+        return expenseDTOs;
+    }
+
+    // TODO CHECK IT
+    @RequestMapping(value = "/expenses/{categoy}", method = RequestMethod.GET)// TODO only for test. Change it to /epenses and work with request parameters, not url path.
+    @ResponseBody()
+    public List<ExpenseDTO> getExpensesByCategoryName(@PathVariable("categoy") String category){
+        List<Expense> expenses = expenseService.getExpensesByCategory(category);
+        List<ExpenseDTO> expenseDTOs = expenses.stream().map((Expense inp)->{ //TODO move this code to service method
+            return expenseService.translateExpenseToDto(inp);
+        } ).collect(Collectors.toList());
+
         return expenseDTOs;
     }
 

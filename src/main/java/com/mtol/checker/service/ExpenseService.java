@@ -1,14 +1,21 @@
 package com.mtol.checker.service;
 
+import com.mtol.checker.entity.Category;
 import com.mtol.checker.entity.Expense;
 import com.mtol.checker.entity.dto.ExpenseDTO;
 
+import java.util.List;
+
 /**
- * Created by mtol on 22.07.2016.
+ * Expense Service interface
  */
 public interface ExpenseService {
     Expense saveExpense(ExpenseDTO expense);
     Expense deleteExpense(Expense expense);
-    Long updateExpemse(Expense expense);
+    Long updateExpense(Expense expense);
+    ExpenseDTO translateExpenseToDto(Expense expense);
+    Expense convertDtoToExpense(ExpenseDTO dto);
+    List<Expense> getExpensesByCategory(Category category);
+    List<Expense> getExpensesByCategory(String name);
 
 }

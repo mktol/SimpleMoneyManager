@@ -17,24 +17,4 @@ public class HelloController {
     public ModelAndView index() {
         return new ModelAndView("hello");
     }
-
-
-    @Value("${application.message:Hello World}")
-    private String message = "Hello World";
-
-    @RequestMapping("/hello")
-    public ModelAndView welcome(Map<String, Object> model) {
-        ModelAndView modelAndView = new ModelAndView("hello");
-        modelAndView.addObject("time", new Date());
-        modelAndView.addObject("message", this.message);
-        return modelAndView;
-    }
-
-    @RequestMapping("/foo")
-    public String foo(Map<String, Object> model) {
-        throw new RuntimeException("Foo");
-    }
-
-
-
 }

@@ -58,6 +58,8 @@
     </form>
 
     <input type="button" id="updateTb" class="btn btn-success" value="update table">
+    <input type="text" id="categoryName"  value="food">
+    <input type="button" id="findExpBuCat" class="btn btn-success" value="find by category">
 
     <table class="display" id="expenseTable">
         <thead>
@@ -87,64 +89,7 @@
 
         </tbody>
     </table>
-    <script>
-        $(document).ready(function () {
-            // Handler for .ready() called.
-            console.log("Im loaded!!! ");
-            console.log("res/stat/js!!! ");
-        });
-        $(function () {
-            $("#expense_form").submit("click", function (event) {
-                event.preventDefault();
-                var cost = $("#cost").val();
-                console.log(cost);
-            });
-        });
 
-        $("#expenseForm").submit(function (event) {
-            event.preventDefault();
-            var cost = $("#cost").val();
-            var description = $("#description").val();
-            var category = $("#category").val();
-
-            $.ajax(
-                    {
-                        type: "POST",
-                        url: "/personal/expense",
-
-                        data: JSON.stringify({cost, description, category}),
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        success: function (data) {
-
-                            $("#cost_id").text(data.cost);
-                            $("#desc").text(data.description);
-                            $("#date").text(data.creationDate);
-                            $("#category_val").text(data.category);
-
-                            console.log(data);
-                        },
-                        failure: function (errMsg) {
-                            alert(errMsg);
-                        }
-                    }
-            );
-        });
-
-        $("#target").submit(function (event) {
-            alert("Handler for .submit() called.");
-            event.preventDefault();
-        });
-
-
-        $("#other").click(function () {
-            $("#target").submit();
-        });
-
-        var putExpenseInTable = new function () {
-
-        }
-    </script>
 </div>
 </body>
 </html>

@@ -36,6 +36,14 @@ public class CategoryServiceImpl implements com.mtol.checker.service.CategorySer
 
     @Override
     public Category createCategory(String name) {
-        return null;
+        Category category = new Category(name);
+        Category savedCategory = categoryRepository.save(category);
+        return savedCategory;
+    }
+
+    @Override
+    public Optional<Category> findCategoryByName(String name) {
+        Optional<Category> category = categoryRepository.findOneByName(name);
+        return category;
     }
 }
