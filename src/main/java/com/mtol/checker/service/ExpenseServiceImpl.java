@@ -2,19 +2,27 @@ package com.mtol.checker.service;
 
 import com.mtol.checker.entity.Category;
 import com.mtol.checker.entity.Expense;
+import com.mtol.checker.entity.User;
 import com.mtol.checker.entity.dto.ExpenseDTO;
 import com.mtol.checker.repository.ExpenseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+<<<<<<< HEAD
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+=======
+import java.util.Date;
+import java.util.List;
+>>>>>>> 45468d1978d9425efa6c6ac6e848508ba6f27729
 
 @Service
 public class ExpenseServiceImpl implements ExpenseService {
+    @Autowired
+    private UserService userService;
     private ExpenseRepository expenseRepository;
     private CategoryService categoryService;
 
@@ -27,8 +35,10 @@ public class ExpenseServiceImpl implements ExpenseService {
     @Override
     public Expense saveExpense(ExpenseDTO expenseDto) {
 
+        User user = userService.getCurrentUser();
         Expense expense = convertDtoToExpense(expenseDto);
         expense= expenseRepository.save(expense);
+        expense.setUser(user);
         return expense;
     }
 
@@ -39,6 +49,21 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     @Override
     public Long updateExpense(Expense expense) {
+<<<<<<< HEAD
+=======
+        return null;
+    }
+
+    @Override
+    public Double sumAllExpenses() {
+        return null;
+    }
+
+    @Override
+    public Double sumExpenseByParam(Category category) {
+//        List<Expense> expenses = expenseRepository.findByCategory(category);
+//        Double res = expenses.stream().mapToDouble(c->c.getCost()).sum();
+>>>>>>> 45468d1978d9425efa6c6ac6e848508ba6f27729
         return null;
     }
 
@@ -55,7 +80,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     public Expense convertDtoToExpense(ExpenseDTO dto){
         Expense expense = new Expense();
-        expense.setCost(new BigDecimal(dto.getCost()));
+        expense.setCost(dto.getCost());
         expense.setDescription(dto.getDescription());
         Category category = categoryService.validateCategory(dto.getCategory());
         expense.addCategory(category);

@@ -6,9 +6,11 @@ import com.mtol.checker.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -56,5 +58,13 @@ public class UserServiceImpl implements UserService {
         user.setPassword( new BCryptPasswordEncoder().encode(form.getPassword()));
         user.setRole(form.getRole());
         return userRepository.save(user);
+    }
+
+    @Override
+    public User getCurrentUser() {
+        org.springframework.security.core.userdetails.User user = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        System.out.println(user.getUsername());
+        Optional<User> resultUser = getUserByEmail(user.getUsername());
+        return resultUser.get();
     }
 }

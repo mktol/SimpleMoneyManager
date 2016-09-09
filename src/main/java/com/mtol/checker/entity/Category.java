@@ -6,10 +6,12 @@ import java.util.List;
 
 @Entity
 public class Category {
+
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CAT_ID")
     private Long id;
+
     private String name;
     @ManyToMany(mappedBy = "categories", fetch = FetchType.LAZY)
     private List<Expense> expenses;
@@ -56,5 +58,13 @@ public class Category {
         this.name = name;
     }
 
+    @Override
+    public String toString() {
+        return "Category{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", expenses=" + expenses.size() +
+                '}';
+    }
 
 }

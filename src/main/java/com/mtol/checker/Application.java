@@ -9,6 +9,7 @@ import com.mtol.checker.entity.Category;
 import com.mtol.checker.entity.Expense;
 import com.mtol.checker.entity.User;
 import com.mtol.checker.entity.UserRole;
+import com.mtol.checker.repository.CategoryRepository;
 import com.mtol.checker.repository.ExpenseRepository;
 import com.mtol.checker.repository.UserRepository;
 import org.slf4j.Logger;
@@ -32,10 +33,18 @@ public class Application {
         ApplicationContext ctx = SpringApplication.run(Application.class, args);
 
 
+<<<<<<< HEAD
+=======
+        String[] beanNames = ctx.getBeanDefinitionNames();
+        Arrays.sort(beanNames);
+        for (String beanName : beanNames) {
+            System.out.println(beanName);
+        }
+>>>>>>> 45468d1978d9425efa6c6ac6e848508ba6f27729
     }
 
     @Bean
-    public CommandLineRunner demo(UserRepository repository, ExpenseRepository expenseRepository) {
+    public CommandLineRunner demo(UserRepository repository, ExpenseRepository expenseRepository, CategoryRepository categoryRepository) {
         return (args) -> {
             // save a couple of customers
             String password = new BCryptPasswordEncoder().encode("1111");
@@ -54,11 +63,9 @@ public class Application {
             repository.save(new User("Michelle", "Dessler"));
             User andriy = new User("Andry", "asdfasdf@mail.py");
             List<Expense> expenses = new ArrayList<>();
-            BigDecimal bigDecimal = new BigDecimal(23);
-            expenses.add(new Expense(bigDecimal, "food" , andriy) );
-            expenses.add(new Expense(bigDecimal, "coffee" , andriy) );
+            expenses.add(new Expense(23., "food" , andriy) );
+            expenses.add(new Expense(23., "coffee" , andriy) );
 
-//            expenseRepository.save(expenses);
             andriy.setExpenses(expenses);
             // ger andy
             andriy = repository.save(andriy);
@@ -88,6 +95,13 @@ public class Application {
                 log.info(bauer.toString());
             }
             log.info("");
+            Category category = categoryRepository.save(new Category("cinema"));
+            Expense expense = new Expense(34. , "food", user);
+            expense.addCategory(category);
+            expenseRepository.save(expense);
+            log.info(category.toString());
+            log.info(expense.toString());
+
         };
     }
 

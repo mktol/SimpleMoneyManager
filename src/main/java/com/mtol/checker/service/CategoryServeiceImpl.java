@@ -2,19 +2,18 @@ package com.mtol.checker.service;
 
 import com.mtol.checker.entity.Category;
 import com.mtol.checker.repository.CategoryRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
-public class CategoryServiceImpl implements com.mtol.checker.service.CategoryService {
+public class CategoryServeiceImpl implements com.mtol.checker.service.CategoryService {
 
     private CategoryRepository categoryRepository;
 
     @Autowired
-    public CategoryServiceImpl(CategoryRepository categoryRepository) {
+    public CategoryServeiceImpl(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
     }
 
@@ -29,8 +28,9 @@ public class CategoryServiceImpl implements com.mtol.checker.service.CategorySer
         if(category.isPresent()){
             return category.get();
         }else {
-            Category cat = new Category(name);
-            return categoryRepository.save(cat);
+            Category category1 = new Category(name);
+            Category resultCategory = categoryRepository.save(category1);
+            return resultCategory;
         }
     }
 
