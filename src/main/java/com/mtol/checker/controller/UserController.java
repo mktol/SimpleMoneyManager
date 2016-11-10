@@ -1,9 +1,8 @@
 package com.mtol.checker.controller;
 
-import com.mtol.checker.Application;
 import com.mtol.checker.entity.UserCreateForm;
-import com.mtol.checker.service.validator.UserCreateFormValidator;
 import com.mtol.checker.service.UserService;
+import com.mtol.checker.service.validator.UserCreateFormValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +62,8 @@ public class UserController {
 
         return "redirect:/users";
     }
+
+//    @RequestMapping(users)
 
     public ModelAndView getUserPage() {
         return new ModelAndView("users", "users", userService.getAllUsers());

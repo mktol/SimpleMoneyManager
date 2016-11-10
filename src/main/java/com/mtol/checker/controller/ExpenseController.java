@@ -32,6 +32,7 @@ public class ExpenseController {
 
     @RequestMapping(value = "/expense", method = RequestMethod.GET)
     public ModelAndView handleExpense() {
+        log.info("sum all expenses. sum = "+expenseService.sumAllExpenses().toString());
         ModelAndView modelAndView = new ModelAndView("expense_state");
         return modelAndView;
     }

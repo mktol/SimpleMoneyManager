@@ -33,8 +33,8 @@
 </head>
 
 <body>
-<<<<<<< HEAD
-<div class="container">
+
+<%--<div class="container">
 
     <form action="/personal/expense" method="post" id="expenseForm">
         <fieldset class="form-group">
@@ -87,8 +87,8 @@
         </tbody>
     </table>
 
-</div>
-=======
+</div>--%>
+
     <div class="container">
 
         <form action="/personal/expense" method="post" id="expenseForm">
@@ -183,6 +183,5 @@
             }
         </script>
     </div>
->>>>>>> 45468d1978d9425efa6c6ac6e848508ba6f27729
 </body>
 </html>

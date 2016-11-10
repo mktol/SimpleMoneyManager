@@ -31,16 +31,13 @@ public class Application {
 
     public static void main(String[] args) {
         ApplicationContext ctx = SpringApplication.run(Application.class, args);
-
-
-<<<<<<< HEAD
-=======
+/*
         String[] beanNames = ctx.getBeanDefinitionNames();
         Arrays.sort(beanNames);
         for (String beanName : beanNames) {
             System.out.println(beanName);
-        }
->>>>>>> 45468d1978d9425efa6c6ac6e848508ba6f27729
+        }*/
+
     }
 
     @Bean
@@ -97,8 +94,15 @@ public class Application {
             log.info("");
             Category category = categoryRepository.save(new Category("cinema"));
             Expense expense = new Expense(34. , "food", user);
+            Expense expense2 = new Expense(37. , "food", user);
+            Expense expense3 = new Expense(100.45 , "food", user);
             expense.addCategory(category);
+            expense2.addCategory(category);
+            expense3.addCategory(category);
+
             expenseRepository.save(expense);
+            expenseRepository.save(expense2);
+            expenseRepository.save(expense3);
             log.info(category.toString());
             log.info(expense.toString());
 

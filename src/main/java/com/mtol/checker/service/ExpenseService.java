@@ -19,14 +19,14 @@ public interface ExpenseService {
     Expense saveExpense(ExpenseDTO expense);
     Expense deleteExpense(Expense expense);
     Long updateExpense(Expense expense);
-<<<<<<< HEAD
+
     ExpenseDTO translateExpenseToDto(Expense expense);
     Expense convertDtoToExpense(ExpenseDTO dto);
     List<Expense> getExpensesByCategory(Category category);
     List<Expense> getExpensesByCategory(String name);
-=======
+
     Double sumAllExpenses();
-    Double sumExpenseByParam(Category category);
->>>>>>> 45468d1978d9425efa6c6ac6e848508ba6f27729
+    Double sumExpenseByCategory(Category category);
+
 
 }
