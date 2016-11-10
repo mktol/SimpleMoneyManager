@@ -40,6 +40,8 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     @Override
     public Expense deleteExpense(Expense expense) {
+
+        expenseRepository.delete(expense);
         return null;
     }
 
