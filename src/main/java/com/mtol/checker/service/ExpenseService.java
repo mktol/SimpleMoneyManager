@@ -2,18 +2,12 @@ package com.mtol.checker.service;
 
 import com.mtol.checker.entity.Category;
 import com.mtol.checker.entity.Expense;
-
-import com.mtol.checker.entity.User;
 import com.mtol.checker.entity.dto.ExpenseDTO;
 
 import java.util.List;
 
 /**
-<<<<<<< HEAD
  * Expense Service interface
-=======
- *
->>>>>>> 45468d1978d9425efa6c6ac6e848508ba6f27729
  */
 public interface ExpenseService {
     Expense saveExpense(ExpenseDTO expense);
@@ -26,6 +20,7 @@ public interface ExpenseService {
     List<Expense> getExpensesByCategory(String name);
 
     Double sumAllExpenses();
+    Double sumAllExpensesForCurrentUser();
     Double sumExpenseByCategory(Category category);
 
 

@@ -23,6 +23,7 @@
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+
     <![endif]-->
 </head>
 
@@ -42,7 +43,7 @@
         <sec:authorize access="isAuthenticated()">
             <p>Ваш логин: <sec:authentication property="principal.username" /></p>
             <p><a class="btn btn-lg btn-danger" href="<c:url value="/logout" />" role="button">Выйти</a></p>
-            <p><a class="btn btn-lg btn-info" href="<c:url value="/expense" />" role="button">Go to expense</a></p>
+            <p><a class="btn btn-lg btn-info" href="<c:url value="/personal/expense" />" role="button">Go to expense</a></p>
 
         </sec:authorize>
     </div>

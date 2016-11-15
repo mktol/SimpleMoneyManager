@@ -1,9 +1,11 @@
 package com.mtol.checker.controller;
 
 import com.mtol.checker.entity.Expense;
+import com.mtol.checker.entity.User;
 import com.mtol.checker.entity.dto.ExpenseDTO;
-import com.mtol.checker.service.validator.ExpenseDtoValidator;
 import com.mtol.checker.service.ExpenseService;
+import com.mtol.checker.service.UserService;
+import com.mtol.checker.service.validator.ExpenseDtoValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,8 @@ public class ExpenseController {
     private static final Logger log = LoggerFactory.getLogger(ExpenseController.class);
 
     private ExpenseService expenseService;
+    @Autowired
+    private UserService userService;
 //    private ExpenseDtoValidator expenseDtoValidator;
 
     @Autowired
@@ -32,8 +36,13 @@ public class ExpenseController {
 
     @RequestMapping(value = "/expense", method = RequestMethod.GET)
     public ModelAndView handleExpense() {
-        log.info("sum all expenses. sum = "+expenseService.sumAllExpenses().toString());
+        Double expenseSum = expenseService.sumAllExpenses();
+        log.info("sum all expenses. sum = "+expenseSum.toString());
         ModelAndView modelAndView = new ModelAndView("expense_state");
+        User current = userService.getCurrentUser();
+        modelAndView.addObject("user_name", current.getName());
+        modelAndView.addObject("user_email", current.getEmail());
+        modelAndView.addObject("expense_sum", expenseSum);
         return modelAndView;
     }
 
@@ -47,7 +56,7 @@ public class ExpenseController {
         return expense;
     }
 
-    @RequestMapping(value = "/expenses", method = RequestMethod.POST)
+    @RequestMapping(value = "/expenses", method = RequestMethod.POST, headers = "content-type=application/x-www-form-urlencoded")
     @ResponseBody()
     public ExpenseDTO[] getExpenses() {
         ExpenseDTO[] expenseDTOs = new ExpenseDTO[5];

@@ -3,7 +3,6 @@ package com.mtol.checker.entity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -16,17 +15,13 @@ public class User {
     private String password;
     @OneToMany(mappedBy = "user")
     private List<Expense> expenses = new ArrayList<>();
+    @OneToMany(mappedBy = "user")
+    private List<ExpectedSpending> spendings = new ArrayList<>();
+
     @Enumerated(EnumType.STRING)
     private UserRole role;
     @ManyToOne
     private Family family;
-
-    // TODO move it to particular class ?
-    /*************************************************/
-    private Double expectedExpense;
-    private Date startDate;
-    private Date endDate;
-    /*************************************************/
 
     public User() {
     }
@@ -93,28 +88,12 @@ public class User {
         this.family = family;
     }
 
-    public Double getExpectedExpense() {
-        return expectedExpense;
+    public List<ExpectedSpending> getSpendings() {
+        return spendings;
     }
 
-    public void setExpectedExpense(Double expectedExpense) {
-        this.expectedExpense = expectedExpense;
-    }
-
-    public Date getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
+    public void setSpendings(List<ExpectedSpending> spendings) {
+        this.spendings = spendings;
     }
 
     @Override

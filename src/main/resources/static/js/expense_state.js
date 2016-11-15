@@ -8,6 +8,7 @@ $( document ).ready(function() {
     console.log("res/stat/js!!! ");
 
 
+
 $("#expenseForm").submit( function (event) {
     event.preventDefault();
     var cost = $("#cost").val();
@@ -27,11 +28,12 @@ $("#expenseForm").submit( function (event) {
         success: function (data) {
             var table = $('#expenseTable').DataTable();
             table.row.add([
+                123,
                 data.description,
                 data.cost,
                 data.category,
                 data.creationDate
-            ]).draw(false);;
+            ]).draw(false);
 
 
         }
@@ -113,6 +115,5 @@ $("#updateTb").on("click", function () {
 $( "#other" ).click(function() {
     $( "#target" ).submit();
 });
-
 
 }); // ready end

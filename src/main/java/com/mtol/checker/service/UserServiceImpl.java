@@ -5,12 +5,10 @@ import com.mtol.checker.entity.UserCreateForm;
 import com.mtol.checker.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.security.Principal;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -20,7 +18,7 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private final UserRepository userRepository;
+    private  UserRepository userRepository;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository) {
@@ -66,5 +64,11 @@ public class UserServiceImpl implements UserService {
         System.out.println(user.getUsername());
         Optional<User> resultUser = getUserByEmail(user.getUsername());
         return resultUser.get();
+    }
+
+    @Override
+    public String getCurrentUserEmail() {
+        org.springframework.security.core.userdetails.User user = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return user.getUsername();
     }
 }
