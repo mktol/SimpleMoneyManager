@@ -8,7 +8,6 @@ import com.mtol.checker.repository.ExpenseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -30,11 +29,11 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     @Override
     public Expense saveExpense(ExpenseDTO expenseDto) {
-
+//        System.out.println(expenseRepository.sumAllByUserEmail());
         User user = userService.getCurrentUser();
         Expense expense = convertDtoToExpense(expenseDto);
-        expense= expenseRepository.save(expense);
         expense.setUser(user);
+        expense= expenseRepository.save(expense);
         return expense;
     }
 
@@ -56,6 +55,13 @@ public class ExpenseServiceImpl implements ExpenseService {
     public Double sumAllExpenses() {
         Double sum = expenseRepository.sumAll();
         return sum;
+    }
+
+    @Override
+    public Double sumAllExpensesForCurrentUser() {
+        String email = userService.getCurrentUserEmail();
+//        expenseRepository.sumAllByUserEmail();
+        return null;
     }
 
     /**

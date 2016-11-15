@@ -18,4 +18,5 @@ public interface UserService {
 
     User create(UserCreateForm form);
     User getCurrentUser();
+    String getCurrentUserEmail();
 }

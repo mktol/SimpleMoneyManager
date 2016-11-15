@@ -43,7 +43,8 @@
 
 
     <div class="container">
-
+        <h2>${user_name}</h2>
+        <h2>${user_email}</h2><h5>All spent: ${expense_sum}; not current user</h5>
         <form action="/personal/expense" method="post" id="expenseForm">
             <fieldset class="form-group">
                 <label for="cost">Цена</label>
