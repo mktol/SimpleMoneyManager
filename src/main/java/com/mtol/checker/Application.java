@@ -1,16 +1,9 @@
 package com.mtol.checker;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import com.mtol.checker.entity.Category;
-import com.mtol.checker.entity.Expense;
-import com.mtol.checker.entity.User;
-import com.mtol.checker.entity.UserRole;
+import com.mtol.checker.entity.*;
 import com.mtol.checker.repository.CategoryRepository;
 import com.mtol.checker.repository.ExpenseRepository;
+import com.mtol.checker.repository.FamilyRepository;
 import com.mtol.checker.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +14,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @SpringBootApplication
 @ComponentScan
@@ -41,7 +36,7 @@ public class Application {
     }
 
     @Bean
-    public CommandLineRunner demo(UserRepository repository, ExpenseRepository expenseRepository, CategoryRepository categoryRepository) {
+    public CommandLineRunner demo(UserRepository repository, ExpenseRepository expenseRepository, CategoryRepository categoryRepository, FamilyRepository familyRepository) {
         return (args) -> {
             // save a couple of customers
             String password = new BCryptPasswordEncoder().encode("1111");
@@ -106,6 +101,11 @@ public class Application {
             log.info(category.toString());
             log.info(expense.toString());
 
+            Family family = new Family();
+            family.setName("My Family");
+            family.addUser(user);
+            familyRepository.save(family);
+            System.out.println(family);
         };
     }
 

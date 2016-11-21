@@ -15,9 +15,9 @@
 
     <!-- Pages -->
 
-    <definition name="login" extends="layout.basic">
-        <put-attribute name="body" value="/WEB-INF/jsp/login.jsp" />
-    </definition>
+    <!--<definition name="login" extends="layout.basic">-->
+        <!--<put-attribute name="body" value="/WEB-INF/jsp/login.jsp" />-->
+    <!--</definition>-->
 
     <definition name="expense_state" extends="layout.basic">
         <put-attribute name="body" value="/WEB-INF/jsp/expense_state.jsp" />

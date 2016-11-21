@@ -31,6 +31,15 @@ public class User {
         this.email = email;
     }
 
+    public Family addFamily(Family family){
+        if(family == null){
+            this.family = family;
+        }
+        if(family !=null && !family.getUsers().contains(this)){
+            family.addUser(this);
+        }
+        return family;
+    }
 
     public String getName() {
         return name;

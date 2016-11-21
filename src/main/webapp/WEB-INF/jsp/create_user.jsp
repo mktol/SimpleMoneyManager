@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,7 +29,7 @@
 <body>
 
 <div class="container" style="width: 300px;">
-    <form:form action = "/user/create" method="post" commandName="form" >
+    <form:form action = "/registration/user/create" method="post" commandName="form" class = "form-signin" >
         <div class="form-group">
             <label for="Email">Email address</label>
             <form:input path="email" type="email" class="form-control col-sm-6" id="email" placeholder="Email"/> <form:errors path="email" cssClass="error"/>
