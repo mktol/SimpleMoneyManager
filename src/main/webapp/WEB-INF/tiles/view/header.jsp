@@ -1,5 +1,8 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css" rel="stylesheet">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <!-- Custom styles for this template -->
 <%--<link href="<c:url value="/pages/css/jumbotron-narrow.css" />" rel="stylesheet">--%>
@@ -35,6 +38,12 @@
                         <li class="dropdown-header">Nav header</li>
                         <li><a href="#">Separated link</a></li>
                         <li><a href="#">One more separated link</a></li>
+                        <li>
+                            <%--<a class="btn btn-lg btn-danger" href="<c:url value="/logout" />" role="button">Выйти</a>--%>
+                            <sec:authorize access="isAuthenticated()">
+                                <a href="<c:url value="/logout" />">Logout</a>
+                            </sec:authorize>
+                        </li>
                     </ul>
                 </li>
             </ul>
