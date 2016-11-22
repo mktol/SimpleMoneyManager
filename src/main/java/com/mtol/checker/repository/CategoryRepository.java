@@ -11,4 +11,5 @@ import java.util.Set;
 public interface CategoryRepository extends CrudRepository<Category, Long> {
     Optional<Category> findOneByName(String name);
     Set<Category> findByNameLike(String name);
+    Set<Category> findByNameStartingWith(String name);
 }

@@ -30,6 +30,7 @@
 
 
     <script src="/js/expense_state.js"></script>
+    <script src="/js/typeahead.bundle.js"></script>
     <%--<script src="/js/jquery-3.1.0.js"></script>--%>
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -55,9 +56,9 @@
                 <input type="text" class="form-control" id="description" placeholder="Описание">
             </fieldset>
 
-            <fieldset class="form-group">
+            <fieldset class="form-group" id="remote">
                 <label for="category">категория</label>
-                <input type="text" class="form-control" id="category" placeholder="категория">
+                <input type="text" class="form-control typeahead" id="category" placeholder="категория">
             </fieldset>
 
             <input type="submit" class="btn btn-default" value="submit">
