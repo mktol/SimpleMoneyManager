@@ -87,7 +87,7 @@ public class ExpenseServiceImpl implements ExpenseService {
     }
 
 
-    public Expense convertDtoToExpense(ExpenseDTO dto){
+    public Expense convertDtoToExpense(ExpenseDTO dto){ //TODO should I move it to UTIL class
         Expense expense = new Expense();
         expense.setCost(dto.getCost());
         expense.setDescription(dto.getDescription());
@@ -114,5 +114,24 @@ public class ExpenseServiceImpl implements ExpenseService {
         }
     }
 
+    @Override
+    public List<Expense> getExpensesForCurrentUser() { // TODO create method that return only first numbers of expense
+        User user = userService.getCurrentUser();
+        return new ArrayList<>(user.getExpenses());
+    }
+
+    @Override
+    public List<ExpenseDTO> translateExpenseToDto(List<Expense> expenses) {
+        List<ExpenseDTO> expenseDTOs = new ArrayList<>();
+        for (Expense expense : expenses) {
+            expenseDTOs.add(translateExpenseToDto(expense));
+        }
+        return expenseDTOs;
+    }
+
+    @Override
+    public List<Expense> translateExpenseDtoToExpense(List<ExpenseDTO> expenses) {
+        return null;
+    }
 
 }

@@ -68,7 +68,6 @@
         <table id = "expenseTable" class="table">
             <thead>
             <tr>
-                <th>id</th>
                 <th>description</th>
                 <th>cost</th>
                 <th>category</th>

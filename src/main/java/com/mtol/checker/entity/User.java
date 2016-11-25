@@ -23,6 +23,8 @@ public class User {
     @ManyToOne
     private Family family;
 
+    private Boolean isMember = false;
+
     public User() {
     }
 

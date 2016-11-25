@@ -18,6 +18,9 @@ public interface ExpenseService {
     Expense convertDtoToExpense(ExpenseDTO dto);
     List<Expense> getExpensesByCategory(Category category);
     List<Expense> getExpensesByCategory(String name);
+    List<Expense> getExpensesForCurrentUser();
+    List<ExpenseDTO> translateExpenseToDto(List<Expense> expenses);
+    List<Expense> translateExpenseDtoToExpense(List<ExpenseDTO> expenses);
 
     Double sumAllExpenses();
     Double sumAllExpensesForCurrentUser();

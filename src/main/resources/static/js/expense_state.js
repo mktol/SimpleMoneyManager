@@ -1,7 +1,18 @@
 $(document).ready(function () {
 
 
-    $('#expenseTable').DataTable();
+    $('#expenseTable').DataTable({
+        "ajax": '/personal/expenses',
+
+        "columns": [
+            { "data": "description" },
+            { "data": "cost" },
+            { "data": "category" },
+            { "data": "creationDate" },
+
+        ]
+    });
+
     // Handler for .ready() called.
     console.log("Im loaded!!! ");
     console.log("res/stat/js!!! ");
@@ -26,7 +37,6 @@ $(document).ready(function () {
             success: function (data) {
                 var table = $('#expenseTable').DataTable();
                 table.row.add([
-                    123,
                     data.description,
                     data.cost,
                     data.category,

@@ -16,6 +16,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @SpringBootApplication
@@ -91,6 +92,9 @@ public class Application {
             Expense expense = new Expense(34. , "food", user);
             Expense expense2 = new Expense(37. , "food", user);
             Expense expense3 = new Expense(100.45 , "food", user);
+            expense.setCreationTime(new Date());
+            expense2.setCreationTime(new Date());
+            expense3.setCreationTime(new Date());
             expense.addCategory(category);
             expense2.addCategory(category);
             expense3.addCategory(category);
