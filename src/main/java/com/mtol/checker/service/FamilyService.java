@@ -32,13 +32,13 @@ public class FamilyService { //TODO this class should be redisigned
 
     /**
      * Connect to existing family by member of this family email;
-     * @param memberEmail
-     * @return
+     * @param memberEmail email of user
+     * @return  name of family
      */
     public String connectToExistingFamily(String memberEmail){
         Optional<User> memb = userService.getUserByEmail(memberEmail);
         User user = userService.getCurrentUser();
-        User member  = memb.orElseThrow(()->new NotImplementedException());
+        User member  = memb.orElseThrow(NotImplementedException::new);
         Family family = member.getFamily();
         if(family==null){
             //TODO create new family, or / end return error, and ask to create new family

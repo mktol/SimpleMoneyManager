@@ -58,7 +58,7 @@
 
             <fieldset class="form-group" id="remote">
                 <label for="category">категория</label>
-                <input type="text" class="form-control typeahead" id="category" placeholder="категория">
+                <input type="text" class="form-control typeahead col-md-4" id="category" placeholder="категория">
             </fieldset>
 
             <input type="submit" class="btn btn-default" value="submit">

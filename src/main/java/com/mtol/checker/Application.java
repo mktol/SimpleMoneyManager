@@ -64,7 +64,7 @@ public class Application {
             andriy = repository.save(andriy);
             System.out.println(andriy);
             List<Expense> expenses1 = andriy.getExpenses();
-            expenses1.forEach(expense -> System.out.println(expense));
+            expenses1.forEach(System.out::println);
 
              // fetch all customers
             log.info("Customers found with findAll():");

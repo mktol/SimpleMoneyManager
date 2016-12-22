@@ -6,12 +6,12 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <div class="content">
-${family}<br/>
-${family}<br/>
-${family}<br/>
-${family}<br/>
+${famil}<br/>
+${famil}<br/>
+${famil}<br/>
+${famil}<br/>
 
-    <h2>create new family</h2>
+    <h2>create new famil</h2>
     <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Small Modal</button>
 
     <!-- Modal -->
@@ -31,7 +31,7 @@ ${family}<br/>
                             <div class="panel-heading" role="tab" id="headingOne">
                                 <h4 class="panel-title">
                                     <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                        Crate new family
+                                        Crate new famil
                                     </a>
                                 </h4>
                             </div>
@@ -49,7 +49,7 @@ ${family}<br/>
                             <div class="panel-heading" role="tab" id="headingTwo">
                                 <h4 class="panel-title">
                                     <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                        Connect to existing family
+                                        Connect to existing famil
                                     </a>
                                 </h4>
                             </div>

@@ -26,7 +26,7 @@ public class CategoryController {
     public Set<String> autocomplete(@PathVariable String categ){
 //        Set<Category> names = categoryRepository.findByNameLike(categ);
         Set<Category> names = categoryRepository.findByNameStartingWith(categ);
-        Set<String> res = names.stream().map(category -> category.getName()).collect(Collectors.toSet());
+        Set<String> res = names.stream().map(Category::getName).collect(Collectors.toSet());
         return  res;
     }
 }

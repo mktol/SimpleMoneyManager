@@ -8,10 +8,7 @@ import com.mtol.checker.repository.ExpenseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 
 @Service
@@ -29,7 +26,6 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     @Override
     public Expense saveExpense(ExpenseDTO expenseDto) {
-//        System.out.println(expenseRepository.sumAllByUserEmail());
         User user = userService.getCurrentUser();
         Expense expense = convertDtoToExpense(expenseDto);
         expense.setUser(user);
@@ -53,27 +49,22 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     @Override
     public Double sumAllExpenses() {
-        Double sum = expenseRepository.sumAll();
-        return sum;
+        return expenseRepository.sumAll();
     }
 
     @Override
     public Double sumAllExpensesForCurrentUser() {
-        String email = userService.getCurrentUserEmail();
-//        expenseRepository.sumAllByUserEmail();
         return null;
     }
 
     /**
      * sum expenses by category
-     * @param category
-     * @return
+     * @param category global category of expense
+     * @return sum expense by category
      */
     @Override
     public Double sumExpenseByCategory(Category category) {
         return category.getExpenses().stream().mapToDouble(Expense::getCost).sum();
-//        return null;
-
     }
 
     @Override
@@ -81,12 +72,12 @@ public class ExpenseServiceImpl implements ExpenseService {
         ExpenseDTO dto = new ExpenseDTO();
         dto.setCreationDate(expense.getCreationTime().toString());
         dto.setDescription(expense.getDescription());
-        dto.setCost(expense.getCost().doubleValue());
+        dto.setCost(expense.getCost());
         dto.setCategory(expense.getCategories().get(0).getName()); // TODO translate categories to string
         return dto;
     }
 
-
+    @Override
     public Expense convertDtoToExpense(ExpenseDTO dto){ //TODO should I move it to UTIL class
         Expense expense = new Expense();
         expense.setCost(dto.getCost());
@@ -131,7 +122,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     @Override
     public List<Expense> translateExpenseDtoToExpense(List<ExpenseDTO> expenses) {
-        return null;
+        return Collections.emptyList();
     }
 
 }

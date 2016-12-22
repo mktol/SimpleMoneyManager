@@ -47,7 +47,7 @@ $(document).ready(function () {
             }
             ,
             failure: function (errMsg) {
-                alert(errMsg);
+                console.log(errMsg);
             }
 
         });
