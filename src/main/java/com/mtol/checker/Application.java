@@ -59,17 +59,7 @@ public class Application {
             System.out.println(user234);
 
             saveUsers(repository);
-            User andriy = new User("Andry", "asdfasdf@mail.py");
-            List<Expense> expenses = new ArrayList<>();
-            expenses.add(new Expense(23., "food" , andriy) );
-            expenses.add(new Expense(23., "coffee" , andriy) );
-
-            andriy.setExpenses(expenses);
-
-            andriy = repository.save(andriy);
-            System.out.println(andriy);
-            List<Expense> expenses1 = andriy.getExpenses();
-            expenses1.forEach(System.out::println);
+            addExpensesAndBuindThemWithUser(repository);
 
              // fetch all customers
             log.info("Customers found with findAll():");
@@ -91,22 +81,7 @@ public class Application {
                 log.info(bauer.toString());
             }
             log.info("");
-            Category category = categoryRepository.save(new Category("cinema"));
-            Expense expense = new Expense(34. , "food", user);
-            Expense expense2 = new Expense(37. , "food", user);
-            Expense expense3 = new Expense(100.45 , "food", user);
-            expense.setCreationTime(new Date());
-            expense2.setCreationTime(new Date());
-            expense3.setCreationTime(new Date());
-            expense.addCategory(category);
-            expense2.addCategory(category);
-            expense3.addCategory(category);
-
-            expenseRepository.save(expense);
-            expenseRepository.save(expense2);
-            expenseRepository.save(expense3);
-            log.info(category.toString());
-            log.info(expense.toString());
+            saveCategoryExpenseAndUser(expenseRepository, categoryRepository, user);
 
             Family family = new Family();
             family.setName("My Family");
@@ -114,6 +89,39 @@ public class Application {
             familyRepository.save(family);
             System.out.println(family);
         };
+    }
+
+    private void saveCategoryExpenseAndUser(ExpenseRepository expenseRepository, CategoryRepository categoryRepository, User user) {
+        Category category = categoryRepository.save(new Category("cinema"));
+        Expense expense = new Expense(34. , "food", user);
+        Expense expense2 = new Expense(37. , "food", user);
+        Expense expense3 = new Expense(100.45 , "food", user);
+        expense.setCreationTime(new Date());
+        expense2.setCreationTime(new Date());
+        expense3.setCreationTime(new Date());
+        expense.addCategory(category);
+        expense2.addCategory(category);
+        expense3.addCategory(category);
+
+        expenseRepository.save(expense);
+        expenseRepository.save(expense2);
+        expenseRepository.save(expense3);
+        log.info(category.toString());
+        log.info(expense.toString());
+    }
+
+    private void addExpensesAndBuindThemWithUser(UserRepository repository) {
+        User andriy = new User("Andry", "asdfasdf@mail.py");
+        List<Expense> expenses = new ArrayList<>();
+        expenses.add(new Expense(23., "food" , andriy) );
+        expenses.add(new Expense(23., "coffee" , andriy) );
+
+        andriy.setExpenses(expenses);
+
+        andriy = repository.save(andriy);
+        System.out.println(andriy);
+        List<Expense> expenses1 = andriy.getExpenses();
+        expenses1.forEach(System.out::println);
     }
 
     private void saveUsers(UserRepository repository) {
