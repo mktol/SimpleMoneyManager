@@ -13,7 +13,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * This class
+ * Category autocomplete controller
  */
 @Controller
 public class CategoryController {
@@ -24,9 +24,7 @@ public class CategoryController {
     @RequestMapping(value = "/categories/autocomplete/{categ}", method = RequestMethod.GET)
     @ResponseBody()
     public Set<String> autocomplete(@PathVariable String categ){
-//        Set<Category> names = categoryRepository.findByNameLike(categ);
         Set<Category> names = categoryRepository.findByNameStartingWith(categ);
-        Set<String> res = names.stream().map(Category::getName).collect(Collectors.toSet());
-        return  res;
+        return  names.stream().map(Category::getName).collect(Collectors.toSet());
     }
 }

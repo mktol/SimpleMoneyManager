@@ -15,6 +15,7 @@ import java.util.Optional;
  */
 @Service
 public class FamilyService { //TODO this class should be redisigned
+
     @Autowired
     private UserService userService;
     @Autowired

@@ -86,7 +86,6 @@ public class ExpenseServiceImpl implements ExpenseService {
         expense.addCategory(category);
         expense.setCreationTime(new Date());
         return expense;
-
     }
 
     @Override

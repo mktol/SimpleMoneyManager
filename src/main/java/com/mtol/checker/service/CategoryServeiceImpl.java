@@ -4,6 +4,7 @@ import com.mtol.checker.entity.Category;
 import com.mtol.checker.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -34,6 +35,7 @@ public class CategoryServeiceImpl implements com.mtol.checker.service.CategorySe
         }
     }
 
+    @Transactional
     @Override
     public Category createCategory(String name) {
         Category category = new Category(name);

@@ -61,10 +61,8 @@ public class UserController {
             userService.create(form);
             securityService.autologin(form.getEmail(), form.getPassword());
         } catch (DataIntegrityViolationException e) {
-
             return  "create_user";
         }
-
         return "redirect:/personal/expense";
     }
 

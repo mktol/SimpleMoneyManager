@@ -5,11 +5,13 @@ import com.mtol.checker.repository.CategoryRepository;
 import com.mtol.checker.repository.ExpenseRepository;
 import com.mtol.checker.repository.FamilyRepository;
 import com.mtol.checker.repository.UserRepository;
+import org.h2.server.web.WebServlet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.embedded.ServletRegistrationBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -37,6 +39,13 @@ public class Application {
     }
 
     @Bean
+    public ServletRegistrationBean h2servletRegistration() {
+        ServletRegistrationBean registration = new ServletRegistrationBean(new WebServlet());
+        registration.addUrlMappings("/console/*");
+        return registration;
+    }
+
+    @Bean
     public CommandLineRunner demo(UserRepository repository, ExpenseRepository expenseRepository, CategoryRepository categoryRepository, FamilyRepository familyRepository) {
         return (args) -> {
             // save a couple of customers
@@ -49,18 +58,14 @@ public class Application {
             User user234 = repository.findOneByEmail("mtol@gmail.ua").get();
             System.out.println(user234);
 
-            repository.save(new User("Jack", "Bauer"));
-            repository.save(new User("Chloe", "O'Brian"));
-            repository.save(new User("Kim", "Bauer"));
-            repository.save(new User("David", "Palmer"));
-            repository.save(new User("Michelle", "Dessler"));
+            saveUsers(repository);
             User andriy = new User("Andry", "asdfasdf@mail.py");
             List<Expense> expenses = new ArrayList<>();
             expenses.add(new Expense(23., "food" , andriy) );
             expenses.add(new Expense(23., "coffee" , andriy) );
 
             andriy.setExpenses(expenses);
-            // ger andy
+
             andriy = repository.save(andriy);
             System.out.println(andriy);
             List<Expense> expenses1 = andriy.getExpenses();
@@ -72,8 +77,6 @@ public class Application {
             for (User user : repository.findAll()) {
                 log.info(user.toString());
             }
-            log.info("");
-
             // fetch an individual User by ID
             User user = repository.findOne(1L);
             log.info("User found with findOne(1L):");
@@ -111,6 +114,14 @@ public class Application {
             familyRepository.save(family);
             System.out.println(family);
         };
+    }
+
+    private void saveUsers(UserRepository repository) {
+        repository.save(new User("Jack", "Bauer"));
+        repository.save(new User("Chloe", "O'Brian"));
+        repository.save(new User("Kim", "Bauer"));
+        repository.save(new User("David", "Palmer"));
+        repository.save(new User("Michelle", "Dessler"));
     }
 
 }

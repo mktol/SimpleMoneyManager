@@ -9,7 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.Optional;
 
 /**
- * Created by mtol on 11.07.2016.
+ * <
  */
 @Controller
 public class LoginController {

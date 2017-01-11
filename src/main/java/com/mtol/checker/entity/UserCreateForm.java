@@ -1,10 +1,8 @@
 package com.mtol.checker.entity;
 
-import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
  * DTO object
@@ -18,7 +16,7 @@ public class UserCreateForm {
     private String email = "";
 
     @NotEmpty
-    @Size(min =3, max= 15, message = "Your password  must between 3 and 15 ")
+//    @Size(min =3, max= 15, message = "Your password  must between 3 and 15 ")
     private String password = "";
 
 

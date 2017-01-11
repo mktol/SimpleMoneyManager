@@ -32,9 +32,9 @@
 <div class="container">
 
     <div class="jumbotron" style="margin-top: 20px;">
-        <h1>Devcolibri.com</h1>
+        <h1>Simple Example</h1>
         <p class="lead">
-            Devcolibri - это сервис предоставляющий всем желающим возможность обучаться программированию.
+            Test Presentation
         </p>
         <sec:authorize access="!isAuthenticated()">
             <p><a class="btn btn-lg btn-success" href="<c:url value="/login" />" role="button">Войти</a></p>

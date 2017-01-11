@@ -36,9 +36,4 @@ public class FamilyController {
         return modelAndView;
     }
 
-/*    @RequestMapping("/family/create")
-    public ModelAndView createFamily(@RequestParam("familyName") String familyName){
-
-
-    }*/
 }

@@ -10,6 +10,7 @@ import com.mtol.checker.service.validator.ExpenseDtoValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -27,12 +28,10 @@ public class ExpenseController {
     private ExpenseService expenseService;
     @Autowired
     private UserService userService;
-//    private ExpenseDtoValidator expenseDtoValidator;
 
     @Autowired
     public ExpenseController(ExpenseService expenseService, ExpenseDtoValidator expenseDtoValidator) {
         this.expenseService = expenseService;
-//        this.expenseDtoValidator = expenseDtoValidator;
     }
 
 
@@ -50,6 +49,7 @@ public class ExpenseController {
 
     @RequestMapping(value = "/expense", method = RequestMethod.POST)
     @ResponseBody
+    @ResponseStatus(value = HttpStatus.CREATED)
     public ExpenseDTO handleExpense(@RequestBody ExpenseDTO expense) {
         log.info("expense == " + expense.toString());
         Expense resExpense = expenseService.saveExpense(expense);
@@ -62,7 +62,7 @@ public class ExpenseController {
     @ResponseBody()
     public ExpenseListWrapper getExpenses() {
         List<ExpenseDTO> expenseDTOs = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 5; i++) { // test data
             ExpenseDTO expense = new ExpenseDTO();
             expense.setCategory("food");
             expense.setCost(33.0 + ((double) i));
@@ -78,7 +78,7 @@ public class ExpenseController {
     }
 
     // TODO CHECK IT
-    @RequestMapping(value = "/expenses/{categoy}", method = RequestMethod.GET)// TODO only for test. Change it to /epenses and work with request parameters, not url path.
+    @RequestMapping(value = "/expenses/{categoy}", method = RequestMethod.GET)// TODO only for test. Change it to /expenses and work with request parameters, not url path.
     @ResponseBody()
     public List<ExpenseDTO> getExpensesByCategoryName(@PathVariable("categoy") String category){
         List<Expense> expenses = expenseService.getExpensesByCategory(category);
