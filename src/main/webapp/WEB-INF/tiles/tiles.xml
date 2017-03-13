@@ -15,11 +15,14 @@
 
     <!-- Pages -->
 
-    <definition name="login" extends="layout.basic">
-        <put-attribute name="body" value="/WEB-INF/jsp/login.jsp" />
-    </definition>
+    <!--<definition name="login" extends="layout.basic">-->
+        <!--<put-attribute name="body" value="/WEB-INF/jsp/login.jsp" />-->
+    <!--</definition>-->
 
     <definition name="expense_state" extends="layout.basic">
         <put-attribute name="body" value="/WEB-INF/jsp/expense_state.jsp" />
+    </definition>
+    <definition name="family_page" extends="layout.basic">
+        <put-attribute name="body" value="/WEB-INF/jsp/family_page.jsp" />
     </definition>
 </tiles-definitions>

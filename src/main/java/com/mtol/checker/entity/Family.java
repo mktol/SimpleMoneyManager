@@ -1,6 +1,7 @@
 package com.mtol.checker.entity;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -14,7 +15,7 @@ public class Family {
     private String name;
 
     @OneToMany(mappedBy = "family")
-    private Set<User> users;
+    private Set<User> users = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -38,5 +39,13 @@ public class Family {
 
     public void setUsers(Set<User> users) {
         this.users = users;
+    }
+
+    public User addUser(User user) {
+        if(!users.contains(user)){
+            users.add(user);
+            user.addFamily(this);
+        }
+        return user;
     }
 }

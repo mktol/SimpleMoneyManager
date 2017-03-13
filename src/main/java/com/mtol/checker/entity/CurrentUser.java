@@ -1,10 +1,9 @@
 package com.mtol.checker.entity;
 
-import org.springframework.context.annotation.Role;
 import org.springframework.security.core.authority.AuthorityUtils;
 
 /**
- * Created by mtol on 11.07.2016.
+ * User class for spring security
  */
 public class CurrentUser extends org.springframework.security.core.userdetails.User {
 

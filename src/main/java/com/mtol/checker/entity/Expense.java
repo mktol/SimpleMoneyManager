@@ -1,7 +1,6 @@
 package com.mtol.checker.entity;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -44,6 +43,7 @@ public class Expense {
             category.getExpenses().add(this);
         }
     }
+
     // Getters and setters
     public List<Category> getCategories() {
         return categories;

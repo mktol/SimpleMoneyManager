@@ -4,7 +4,6 @@ import com.mtol.checker.entity.UserCreateForm;
 import com.mtol.checker.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
@@ -30,16 +29,23 @@ public class UserCreateFormValidator implements Validator{
         UserCreateForm form = (UserCreateForm) o;
         validateEmail(errors, form);
         validatePasswords(errors, form);
+        validateName(errors, form);
     }
 
     private void validatePasswords(Errors errors, UserCreateForm form){
-        if(form.getPassword().length()<4){
+        if(form.getPassword().length()<4) {
             errors.reject("password", "Password is to short. Password must be more than 4 char");
         }
     }
     private void validateEmail(Errors errors, UserCreateForm form){
         if(userService.getUserByEmail(form.getEmail()).isPresent()){
             errors.reject("email", "This email already exist!");
+        }
+    }
+
+    private void validateName(Errors errors, UserCreateForm form){
+        if(form.getName().length()<3){
+            errors.reject("name", "to short name");
         }
     }
 

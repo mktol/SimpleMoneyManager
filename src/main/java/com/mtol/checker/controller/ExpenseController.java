@@ -3,16 +3,19 @@ package com.mtol.checker.controller;
 import com.mtol.checker.entity.Expense;
 import com.mtol.checker.entity.User;
 import com.mtol.checker.entity.dto.ExpenseDTO;
+import com.mtol.checker.entity.dto.ExpenseListWrapper;
 import com.mtol.checker.service.ExpenseService;
 import com.mtol.checker.service.UserService;
 import com.mtol.checker.service.validator.ExpenseDtoValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,12 +28,10 @@ public class ExpenseController {
     private ExpenseService expenseService;
     @Autowired
     private UserService userService;
-//    private ExpenseDtoValidator expenseDtoValidator;
 
     @Autowired
     public ExpenseController(ExpenseService expenseService, ExpenseDtoValidator expenseDtoValidator) {
         this.expenseService = expenseService;
-//        this.expenseDtoValidator = expenseDtoValidator;
     }
 
 
@@ -48,6 +49,7 @@ public class ExpenseController {
 
     @RequestMapping(value = "/expense", method = RequestMethod.POST)
     @ResponseBody
+    @ResponseStatus(value = HttpStatus.CREATED)
     public ExpenseDTO handleExpense(@RequestBody ExpenseDTO expense) {
         log.info("expense == " + expense.toString());
         Expense resExpense = expenseService.saveExpense(expense);
@@ -56,23 +58,27 @@ public class ExpenseController {
         return expense;
     }
 
-    @RequestMapping(value = "/expenses", method = RequestMethod.POST, headers = "content-type=application/x-www-form-urlencoded")
+    @RequestMapping(value = "/expenses", method = RequestMethod.GET)
     @ResponseBody()
-    public ExpenseDTO[] getExpenses() {
-        ExpenseDTO[] expenseDTOs = new ExpenseDTO[5];
-        for (int i = 0; i < expenseDTOs.length; i++) {
+    public ExpenseListWrapper getExpenses() {
+        List<ExpenseDTO> expenseDTOs = new ArrayList<>();
+        for (int i = 0; i < 5; i++) { // test data
             ExpenseDTO expense = new ExpenseDTO();
             expense.setCategory("food");
             expense.setCost(33.0 + ((double) i));
             expense.setCreationDate(new Date().toString());
             expense.setDescription("Description = " + i);
-            expenseDTOs[i] = expense;
+            expenseDTOs.add(expense);
         }
-        return expenseDTOs;
+        ExpenseListWrapper result = new ExpenseListWrapper();
+        List<Expense> expenses = expenseService.getExpensesForCurrentUser();
+
+        result.setData(expenseService.translateExpenseToDto(expenses));
+        return result;
     }
 
     // TODO CHECK IT
-    @RequestMapping(value = "/expenses/{categoy}", method = RequestMethod.GET)// TODO only for test. Change it to /epenses and work with request parameters, not url path.
+    @RequestMapping(value = "/expenses/{categoy}", method = RequestMethod.GET)// TODO only for test. Change it to /expenses and work with request parameters, not url path.
     @ResponseBody()
     public List<ExpenseDTO> getExpensesByCategoryName(@PathVariable("categoy") String category){
         List<Expense> expenses = expenseService.getExpensesByCategory(category);

@@ -8,6 +8,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -46,13 +47,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public User create(UserCreateForm form) {
-        System.out.println();
         User user = new User();
-
         user.setEmail(form.getEmail());
         user.setName(form.getName());
-//        user.setPassword( new BCryptPasswordEncoder().encode("1111"));
         user.setPassword( new BCryptPasswordEncoder().encode(form.getPassword()));
         user.setRole(form.getRole());
         return userRepository.save(user);

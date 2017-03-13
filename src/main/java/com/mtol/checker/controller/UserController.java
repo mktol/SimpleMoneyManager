@@ -1,17 +1,19 @@
 package com.mtol.checker.controller;
 
 import com.mtol.checker.entity.UserCreateForm;
+import com.mtol.checker.service.SecurityService;
 import com.mtol.checker.service.UserService;
 import com.mtol.checker.service.validator.UserCreateFormValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -23,6 +25,8 @@ public class UserController {
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
     private final UserService userService;
     private final UserCreateFormValidator userCreateFormValidator;
+    @Autowired
+    private SecurityService securityService;
 
     @Autowired
     public UserController(UserService userService, UserCreateFormValidator userCreateFormValidator) {
@@ -47,24 +51,22 @@ public class UserController {
         return new ModelAndView("create_user", "form", new UserCreateForm());
     }
 
-    @RequestMapping(value = "/user/create", method = RequestMethod.POST)
-    public String handleCreateForm(@Valid @ModelAttribute("form") UserCreateForm form, BindingResult bindingResult, HttpRequest request) {
+    @RequestMapping(value = "/registration/user/create", method = RequestMethod.POST)
+    public String handleCreateForm(@Valid @ModelAttribute("form") UserCreateForm form, BindingResult bindingResult, WebRequest request, Errors errors) {
 
         if (bindingResult.hasErrors()) {
             return "create_user";
         }
         try {
             userService.create(form);
+            securityService.autologin(form.getEmail(), form.getPassword());
         } catch (DataIntegrityViolationException e) {
-
             return  "create_user";
         }
-
-        return "redirect:/users";
+        return "redirect:/personal/expense";
     }
 
-//    @RequestMapping(users)
-
+    @RequestMapping("/users")
     public ModelAndView getUserPage() {
         return new ModelAndView("users", "users", userService.getAllUsers());
     }

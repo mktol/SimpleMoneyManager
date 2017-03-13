@@ -1,27 +1,25 @@
 package com.mtol.checker;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import com.mtol.checker.entity.Category;
-import com.mtol.checker.entity.Expense;
-import com.mtol.checker.entity.User;
-import com.mtol.checker.entity.UserRole;
+import com.mtol.checker.entity.*;
 import com.mtol.checker.repository.CategoryRepository;
 import com.mtol.checker.repository.ExpenseRepository;
+import com.mtol.checker.repository.FamilyRepository;
 import com.mtol.checker.repository.UserRepository;
+import org.h2.server.web.WebServlet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.embedded.ServletRegistrationBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @SpringBootApplication
 @ComponentScan
@@ -41,7 +39,14 @@ public class Application {
     }
 
     @Bean
-    public CommandLineRunner demo(UserRepository repository, ExpenseRepository expenseRepository, CategoryRepository categoryRepository) {
+    public ServletRegistrationBean h2servletRegistration() {
+        ServletRegistrationBean registration = new ServletRegistrationBean(new WebServlet());
+        registration.addUrlMappings("/console/*");
+        return registration;
+    }
+
+    @Bean
+    public CommandLineRunner demo(UserRepository repository, ExpenseRepository expenseRepository, CategoryRepository categoryRepository, FamilyRepository familyRepository) {
         return (args) -> {
             // save a couple of customers
             String password = new BCryptPasswordEncoder().encode("1111");
@@ -53,22 +58,8 @@ public class Application {
             User user234 = repository.findOneByEmail("mtol@gmail.ua").get();
             System.out.println(user234);
 
-            repository.save(new User("Jack", "Bauer"));
-            repository.save(new User("Chloe", "O'Brian"));
-            repository.save(new User("Kim", "Bauer"));
-            repository.save(new User("David", "Palmer"));
-            repository.save(new User("Michelle", "Dessler"));
-            User andriy = new User("Andry", "asdfasdf@mail.py");
-            List<Expense> expenses = new ArrayList<>();
-            expenses.add(new Expense(23., "food" , andriy) );
-            expenses.add(new Expense(23., "coffee" , andriy) );
-
-            andriy.setExpenses(expenses);
-            // ger andy
-            andriy = repository.save(andriy);
-            System.out.println(andriy);
-            List<Expense> expenses1 = andriy.getExpenses();
-            expenses1.forEach(expense -> System.out.println(expense));
+            saveUsers(repository);
+            addExpensesAndBuindThemWithUser(repository);
 
              // fetch all customers
             log.info("Customers found with findAll():");
@@ -76,8 +67,6 @@ public class Application {
             for (User user : repository.findAll()) {
                 log.info(user.toString());
             }
-            log.info("");
-
             // fetch an individual User by ID
             User user = repository.findOne(1L);
             log.info("User found with findOne(1L):");
@@ -92,21 +81,55 @@ public class Application {
                 log.info(bauer.toString());
             }
             log.info("");
-            Category category = categoryRepository.save(new Category("cinema"));
-            Expense expense = new Expense(34. , "food", user);
-            Expense expense2 = new Expense(37. , "food", user);
-            Expense expense3 = new Expense(100.45 , "food", user);
-            expense.addCategory(category);
-            expense2.addCategory(category);
-            expense3.addCategory(category);
+            saveCategoryExpenseAndUser(expenseRepository, categoryRepository, user);
 
-            expenseRepository.save(expense);
-            expenseRepository.save(expense2);
-            expenseRepository.save(expense3);
-            log.info(category.toString());
-            log.info(expense.toString());
-
+            Family family = new Family();
+            family.setName("My Family");
+            family.addUser(user);
+            familyRepository.save(family);
+            System.out.println(family);
         };
+    }
+
+    private void saveCategoryExpenseAndUser(ExpenseRepository expenseRepository, CategoryRepository categoryRepository, User user) {
+        Category category = categoryRepository.save(new Category("cinema"));
+        Expense expense = new Expense(34. , "food", user);
+        Expense expense2 = new Expense(37. , "food", user);
+        Expense expense3 = new Expense(100.45 , "food", user);
+        expense.setCreationTime(new Date());
+        expense2.setCreationTime(new Date());
+        expense3.setCreationTime(new Date());
+        expense.addCategory(category);
+        expense2.addCategory(category);
+        expense3.addCategory(category);
+
+        expenseRepository.save(expense);
+        expenseRepository.save(expense2);
+        expenseRepository.save(expense3);
+        log.info(category.toString());
+        log.info(expense.toString());
+    }
+
+    private void addExpensesAndBuindThemWithUser(UserRepository repository) {
+        User andriy = new User("Andry", "asdfasdf@mail.py");
+        List<Expense> expenses = new ArrayList<>();
+        expenses.add(new Expense(23., "food" , andriy) );
+        expenses.add(new Expense(23., "coffee" , andriy) );
+
+        andriy.setExpenses(expenses);
+
+        andriy = repository.save(andriy);
+        System.out.println(andriy);
+        List<Expense> expenses1 = andriy.getExpenses();
+        expenses1.forEach(System.out::println);
+    }
+
+    private void saveUsers(UserRepository repository) {
+        repository.save(new User("Jack", "Bauer"));
+        repository.save(new User("Chloe", "O'Brian"));
+        repository.save(new User("Kim", "Bauer"));
+        repository.save(new User("David", "Palmer"));
+        repository.save(new User("Michelle", "Dessler"));
     }
 
 }
